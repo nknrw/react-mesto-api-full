@@ -90,7 +90,7 @@ class Api {
 
 // Авторизация
 const api = new Api({
-	baseUrl: 'http://localhost:3001',
+	baseUrl: 'http://api.mesto.nknrw.nomoredomains.icu/',
 	headers: {
 		// authorization: '62ebdfd5-7936-4ed6-b3c0-2901452931d5',
 		'Content-Type': 'application/json',
