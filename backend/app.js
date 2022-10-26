@@ -20,8 +20,6 @@ const app = express();
 const allowedCors = [
   'http://mesto.nknrw.nomoredomains.icu/',
   'https://mesto.nknrw.nomoredomains.icu/',
-  'http://api.mesto.nknrw.nomoredomains.icu/',
-  'https://api.mesto.nknrw.nomoredomains.icu/',
   'http://localhost:3000',
   'https://localhost:3000',
 ];
