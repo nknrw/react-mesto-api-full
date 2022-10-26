@@ -1,4 +1,4 @@
-const baseUrl = 'http://api.mesto.nknrw.nomoredomains.icu/';
+const baseUrl = 'https://api.mesto.nknrw.nomoredomains.icu/';
 
 function checkResponse(res) {
     if (res.ok) {

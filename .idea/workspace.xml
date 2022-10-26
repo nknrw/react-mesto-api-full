@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="73d5c6a7-9d09-46a4-a945-a3596747f5c1" name="Changes" comment="fix: исправить урлы!!!">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,6 +42,8 @@
       <workItem from="1666803635866" duration="105000" />
       <workItem from="1666804325801" duration="2145000" />
       <workItem from="1666806509355" duration="334000" />
+      <workItem from="1666808163640" duration="1173000" />
+      <workItem from="1666814841276" duration="1041000" />
     </task>
     <task id="LOCAL-00001" summary="fix: исправить урлы">
       <created>1666805045468</created>
