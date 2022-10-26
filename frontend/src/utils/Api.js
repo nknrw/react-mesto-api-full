@@ -16,6 +16,7 @@ class Api {
 	getUserInfo() {
 		return fetch(`${this._baseUrl}/users/me`, {
 			headers: this._headers,
+			credentials: 'include',
 		}).then((res) => this._getResponseData(res));
 	}
 
@@ -24,6 +25,7 @@ class Api {
 		return fetch(`${this._baseUrl}/users/me`, {
 			method: 'PATCH',
 			headers: this._headers,
+			credentials: 'include',
 			body: JSON.stringify({
 				name: name,
 				about: about,
@@ -35,6 +37,7 @@ class Api {
 	getInitialCards() {
 		return fetch(`${this._baseUrl}/cards`, {
 			headers: this._headers,
+			credentials: 'include',
 		}).then((res) => this._getResponseData(res));
 	}
 
@@ -43,6 +46,7 @@ class Api {
 		return fetch(`${this._baseUrl}/cards`, {
 			method: 'POST',
 			headers: this._headers,
+			credentials: 'include',
 			body: JSON.stringify(item),
 		}).then((res) => this._getResponseData(res));
 	}
@@ -52,6 +56,7 @@ class Api {
 		return fetch(`${this._baseUrl}/cards/${cardId}`, {
 			method: 'DELETE',
 			headers: this._headers,
+			credentials: 'include',
 		}).then((res) => this._getResponseData(res));
 	}
 	
@@ -61,11 +66,13 @@ class Api {
 			return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
 				method: "DELETE",
 				headers: this._headers,
+				credentials: 'include',
 			}).then(this._getResponseData);
 		} else {
 			return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
 				method: "PUT",
 				headers: this._headers,
+				credentials: 'include',
 			}).then(this._getResponseData);
 		}
 	}
@@ -75,6 +82,7 @@ class Api {
 		return fetch(`${this._baseUrl}/users/me/avatar`, {
 			method: 'PATCH',
 			headers: this._headers,
+			credentials: 'include',
 			body: JSON.stringify(avatar),
 		}).then((res) => this._getResponseData(res));
 	}
@@ -82,9 +90,9 @@ class Api {
 
 // Авторизация
 const api = new Api({
-	baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-45',
+	baseUrl: 'http://localhost:3001',
 	headers: {
-		authorization: '62ebdfd5-7936-4ed6-b3c0-2901452931d5',
+		// authorization: '62ebdfd5-7936-4ed6-b3c0-2901452931d5',
 		'Content-Type': 'application/json',
 	},
 });

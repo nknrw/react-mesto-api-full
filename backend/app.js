@@ -1,22 +1,44 @@
 /* eslint-disable import/no-unresolved */
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const { celebrate, Joi, errors } = require('celebrate');
+const cors = require('cors');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
+
 const auth = require('./middlewares/auth');
 const { createUser, login } = require('./controllers/users');
 const NotFoundError = require('./errors/not-found-err');
 const ServerError = require('./errors/server-err');
 
-const { PORT = 3000 } = process.env;
+const { PORT = 3001 } = process.env;
 
 const app = express();
+
+const allowedCors = [
+  'http://mesto.nknrw.nomoredomains.icu/',
+  'https://mesto.nknrw.nomoredomains.icu/',
+  'http://api.mesto.nknrw.nomoredomains.icu/',
+  'https://api.mesto.nknrw.nomoredomains.icu/',
+  'http://localhost:3000',
+  'https://localhost:3000',
+];
+
+const corsOptions = {
+  origin: allowedCors,
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.json());
+
+app.use(requestLogger);
 
 app.post('/signin', celebrate({
   body: Joi.object().keys({
@@ -44,6 +66,14 @@ app.use('*', (req, res, next) => {
   next(new NotFoundError('Запрашиваемый ресурс не найден'));
 });
 
+app.use(errorLogger);
+
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new ServerError('Сервер сейчас упадёт');
+  }, 0);
+});
+
 // eslint-disable-next-line no-undef
 app.use(errors());
 
@@ -56,11 +86,11 @@ app.use((err, req, res, next) => {
 
 async function start(req, res, next) {
   try {
-    await mongoose.connect('mongodb://localhost:27017/mestodb', {
+    mongoose.connect('mongodb://localhost:27017/mestodb', {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    await app.listen(PORT);
+    app.listen(PORT);
   } catch (err) {
     next(new ServerError('Ошибка сервера'));
   }

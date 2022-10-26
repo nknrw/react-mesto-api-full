@@ -1,4 +1,4 @@
-const baseUrl = 'https://auth.nomoreparties.co';
+const baseUrl = 'http://localhost:3001';
 
 function checkResponse(res) {
     if (res.ok) {
