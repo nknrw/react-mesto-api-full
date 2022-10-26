@@ -26,12 +26,17 @@ const allowedCors = [
   'https://localhost:3000',
 ];
 
-const corsOptions = {
-  origin: allowedCors,
-  credentials: true,
+const corsOptionsDelegate = (req, callback) => {
+  let corsOptions;
+  if (allowedCors.indexOf(req.header('Origin')) !== -1) {
+    corsOptions = { origin: true, credentials: true };
+  } else {
+    corsOptions = { origin: false, credentials: true };
+  }
+  callback(null, corsOptions);
 };
 
-app.use(cors(corsOptions));
+app.use(cors(corsOptionsDelegate));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
