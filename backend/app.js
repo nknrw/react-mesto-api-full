@@ -1,13 +1,9 @@
 /* eslint-disable import/no-unresolved */
-require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const { celebrate, Joi, errors } = require('celebrate');
-const cors = require('cors');
-const { requestLogger, errorLogger } = require('./middlewares/logger');
-
 const auth = require('./middlewares/auth');
 const { createUser, login } = require('./controllers/users');
 const NotFoundError = require('./errors/not-found-err');
@@ -17,46 +13,10 @@ const { PORT = 3000 } = process.env;
 
 const app = express();
 
-const corsOptions = {
-  origin: [
-    'http://localhost:3000',
-    'https://localhost:3000',
-    'http://mesto.nknrw.nomoredomains.icu/',
-    'https://mesto.nknrw.nomoredomains.icu/',
-  ],
-  credentials: true,
-  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'origin', 'Authorization'],
-  preflightContinue: false,
-};
-
-app.use(cors(corsOptions));
-
-// const allowedCors = [
-//   'http://mesto.nknrw.nomoredomains.icu/',
-//   'https://mesto.nknrw.nomoredomains.icu/',
-//   'http://localhost:3000',
-//   'https://localhost:3000',
-// ];
-//
-// const corsOptionsDelegate = (req, callback) => {
-//   let corsOptions;
-//   if (allowedCors.indexOf(req.header('Origin')) !== -1) {
-//     corsOptions = { origin: true, credentials: true };
-//   } else {
-//     corsOptions = { origin: false, credentials: true };
-//   }
-//   callback(null, corsOptions);
-// };
-//
-// app.use(cors(corsOptionsDelegate));
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.json());
-
-app.use(requestLogger);
 
 app.post('/signin', celebrate({
   body: Joi.object().keys({
@@ -84,14 +44,6 @@ app.use('*', (req, res, next) => {
   next(new NotFoundError('Запрашиваемый ресурс не найден'));
 });
 
-app.use(errorLogger);
-
-app.get('/crash-test', () => {
-  setTimeout(() => {
-    throw new ServerError('Сервер сейчас упадёт');
-  }, 0);
-});
-
 // eslint-disable-next-line no-undef
 app.use(errors());
 
@@ -104,11 +56,11 @@ app.use((err, req, res, next) => {
 
 async function start(req, res, next) {
   try {
-    mongoose.connect('mongodb://localhost:27017/mestodb', {
+    await mongoose.connect('mongodb://localhost:27017/mestodb', {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    app.listen(PORT);
+    await app.listen(PORT);
   } catch (err) {
     next(new ServerError('Ошибка сервера'));
   }
