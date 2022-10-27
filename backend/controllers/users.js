@@ -9,7 +9,7 @@ const ConflictError = require('../errors/conflict-err');
 const NotFoundError = require('../errors/not-found-err');
 const ServerError = require('../errors/server-err');
 
-const { JWT_SECRET = 'super-secret-key' } = process.env;
+const { JWT_SECRET, NODE_ENV } = process.env;
 
 module.exports.login = async (req, res, next) => {
   const { email, password } = req.body;
@@ -22,7 +22,7 @@ module.exports.login = async (req, res, next) => {
     if (!matched) {
       return next(new AuthorizationError('Неправильные почта или пароль'));
     }
-    const token = jwt.sign({ _id: user._id }, JWT_SECRET, { expiresIn: '7d' });
+    const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', { expiresIn: '7d' });
     res.cookie('jwt', token, {
       maxAge: 3600000 * 24 * 7,
       httpOnly: true,

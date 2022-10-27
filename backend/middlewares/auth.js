@@ -3,7 +3,7 @@ require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const AuthorizationError = require('../errors/authorization-err');
 
-const { JWT_SECRET = 'super-secret-key' } = process.env;
+const { NODE_ENV, JWT_SECRET } = process.env;
 
 // eslint-disable-next-line consistent-return
 const auth = (req, res, next) => {
@@ -12,7 +12,7 @@ const auth = (req, res, next) => {
     let payload;
 
     try {
-      payload = jwt.verify(token, process.env.NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret');
+      payload = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret');
     } catch (err) {
       return next(new AuthorizationError('Необходима авторизация'));
     }

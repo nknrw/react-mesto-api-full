@@ -14,6 +14,7 @@ export function register(email, password) {
         headers: {
             'Content-Type': 'application/json'
         },
+        credentials: 'include',
         body: JSON.stringify({ email, password })
     })
         .then(checkResponse);
@@ -25,6 +26,7 @@ export function authorize(email, password) {
         headers: {
             'Content-Type': 'application/json'
         },
+        credentials: 'include',
         body: JSON.stringify({ email, password })
     })
         .then(checkResponse);
@@ -36,7 +38,8 @@ export function getContent(token) {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
-        }
+        },
+        credentials: 'include',
     })
         .then(checkResponse);
 }
