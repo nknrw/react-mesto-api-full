@@ -17,24 +17,39 @@ const { PORT = 3000 } = process.env;
 
 const app = express();
 
-const allowedCors = [
-  'http://mesto.nknrw.nomoredomains.icu/',
-  'https://mesto.nknrw.nomoredomains.icu/',
-  'http://localhost:3000',
-  'https://localhost:3000',
-];
-
-const corsOptionsDelegate = (req, callback) => {
-  let corsOptions;
-  if (allowedCors.indexOf(req.header('Origin')) !== -1) {
-    corsOptions = { origin: true, credentials: true };
-  } else {
-    corsOptions = { origin: false, credentials: true };
-  }
-  callback(null, corsOptions);
+const corsOptions = {
+  origin: [
+    'http://localhost:3000',
+    'https://localhost:3000',
+    'http://mesto.nknrw.nomoredomains.icu/',
+    'https://mesto.nknrw.nomoredomains.icu/',
+  ],
+  credentials: true,
+  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'origin', 'Authorization'],
+  preflightContinue: false,
 };
 
-app.use(cors(corsOptionsDelegate));
+app.use(cors(corsOptions));
+
+// const allowedCors = [
+//   'http://mesto.nknrw.nomoredomains.icu/',
+//   'https://mesto.nknrw.nomoredomains.icu/',
+//   'http://localhost:3000',
+//   'https://localhost:3000',
+// ];
+//
+// const corsOptionsDelegate = (req, callback) => {
+//   let corsOptions;
+//   if (allowedCors.indexOf(req.header('Origin')) !== -1) {
+//     corsOptions = { origin: true, credentials: true };
+//   } else {
+//     corsOptions = { origin: false, credentials: true };
+//   }
+//   callback(null, corsOptions);
+// };
+//
+// app.use(cors(corsOptionsDelegate));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
