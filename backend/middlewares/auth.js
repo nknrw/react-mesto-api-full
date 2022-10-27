@@ -1,4 +1,5 @@
 // eslint-disable-next-line import/no-unresolved
+require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const AuthorizationError = require('../errors/authorization-err');
 
@@ -11,7 +12,7 @@ const auth = (req, res, next) => {
     let payload;
 
     try {
-      payload = jwt.verify(token, JWT_SECRET);
+      payload = jwt.verify(token, process.env.NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret');
     } catch (err) {
       return next(new AuthorizationError('Необходима авторизация'));
     }
