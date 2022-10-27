@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const { celebrate, Joi, errors } = require('celebrate');
-const cors = require('cors');
+// const cors = require('cors');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const auth = require('./middlewares/auth');
@@ -17,24 +17,24 @@ const { PORT = 3000 } = process.env;
 
 const app = express();
 
-const allowedCors = [
-  'http://mesto.nknrw.nomoredomains.icu/',
-  'https://mesto.nknrw.nomoredomains.icu/',
-  'http://localhost:3000',
-  'https://localhost:3000',
-];
-
-const corsOptionsDelegate = (req, callback) => {
-  let corsOptions;
-  if (allowedCors.indexOf(req.header('Origin')) !== -1) {
-    corsOptions = { origin: true, credentials: true };
-  } else {
-    corsOptions = { origin: false, credentials: true };
-  }
-  callback(null, corsOptions);
-};
-
-app.use(cors(corsOptionsDelegate));
+// const allowedCors = [
+//   'http://mesto.nknrw.nomoredomains.icu/',
+//   'https://mesto.nknrw.nomoredomains.icu/',
+//   'http://localhost:3000',
+//   'https://localhost:3000',
+// ];
+//
+// const corsOptionsDelegate = (req, callback) => {
+//   let corsOptions;
+//   if (allowedCors.indexOf(req.header('Origin')) !== -1) {
+//     corsOptions = { origin: true, credentials: true };
+//   } else {
+//     corsOptions = { origin: false, credentials: true };
+//   }
+//   callback(null, corsOptions);
+// };
+//
+// app.use(cors(corsOptionsDelegate));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
