@@ -1,3 +1,5 @@
+const { NODE_ENV } = process.env;
+
 class Api {
 	constructor({ baseUrl, headers }) {
 		this._baseUrl = baseUrl;
@@ -90,7 +92,7 @@ class Api {
 
 // Авторизация
 const api = new Api({
-	baseUrl: 'https://api.mesto.nknrw.nomoredomains.icu',
+	baseUrl: NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://api.mesto.nknrw.nomoredomains.icu',
 	headers: {
 		'Content-Type': 'application/json',
 	},

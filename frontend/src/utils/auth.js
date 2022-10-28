@@ -1,4 +1,7 @@
-const baseUrl = 'https://api.mesto.nknrw.nomoredomains.icu';
+// const baseUrl = 'https://api.mesto.nknrw.nomoredomains.icu';
+const { NODE_ENV } = process.env;
+
+const baseUrl = NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://api.mesto.nknrw.nomoredomains.icu';
 
 function checkResponse(res) {
     if (res.ok) {
@@ -32,7 +35,7 @@ export function authorize(email, password) {
         .then(checkResponse);
 }
 
-export function getContent(token) {
+export function getContent() {
     return fetch(`${baseUrl}/users/me`, {
         method: 'GET',
         headers: {
