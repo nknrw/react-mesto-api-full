@@ -38,9 +38,9 @@ export default function App() {
 		tokenCheck();
 		if (loggedIn) {
 			Promise.all([api.getUserInfo(), api.getInitialCards()])
-				.then(([userData, initialCards]) => {
+				.then(([userData, { cards }]) => {
 					setCurrentUser(userData);
-					setCards(initialCards);
+					setCards(cards);
 				})
 				.catch((err) => {
 					console.log(err);
@@ -163,7 +163,7 @@ export default function App() {
 			auth.getContent(jwt)
 				.then((res) => {
 					setLoggedIn(true);
-					setUserEmail(res.data.email);
+					setUserEmail(res.email);
 					history.push('/');
 				})
 				.catch((err) => {
