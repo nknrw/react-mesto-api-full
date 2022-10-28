@@ -34,6 +34,21 @@ export default function App() {
 	const [userEmail, setUserEmail] = useState('');
 	const history = useHistory();
 
+	const tokenCheck = React.useCallback(() => {
+		const jwt = localStorage.getItem('jwt');
+		if (jwt) {
+			auth.getContent(jwt)
+				.then((res) => {
+					setLoggedIn(true);
+					setUserEmail(res.email);
+					history.push('/');
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		}
+	}, [history]);
+
 	useEffect(() => {
 		tokenCheck();
 		if (loggedIn) {
@@ -46,8 +61,7 @@ export default function App() {
 					console.log(err);
 				});
 		}
-	}, [loggedIn]);
-
+	}, [loggedIn, tokenCheck]);
 
 	function handleCardLike(card) {
 		const isLiked = card.likes.some((like) => like._id === currentUser._id);
@@ -155,21 +169,6 @@ export default function App() {
 				setIsInfoTooltipOpen(true);
 				console.log(err);
 			});
-	}
-
-	function tokenCheck() {
-		const jwt = localStorage.getItem('jwt');
-		if (jwt) {
-			auth.getContent(jwt)
-				.then((res) => {
-					setLoggedIn(true);
-					setUserEmail(res.email);
-					history.push('/');
-				})
-				.catch((err) => {
-					console.log(err);
-				});
-		}
 	}
 
 	function handleSignOut() {

@@ -69,7 +69,6 @@ app.use('*', (req, res, next) => {
 
 app.use(errorLogger);
 
-// eslint-disable-next-line no-undef
 app.use(errors());
 
 app.use((err, req, res, next) => {
