@@ -46,7 +46,7 @@ export default function App() {
 					console.log(err);
 				});
 		}
-	}, [loggedIn, tokenCheck]);
+	}, [loggedIn]);
 
 
 	function handleCardLike(card) {
