@@ -27,7 +27,7 @@ export default function Main(props) {
 			</section>
 			{/* <!-- Карточки --> */}
 			<section className="elements">
-				{props.cards?.map((newCard) => (
+				{props.cards.map((newCard) => (
 						<Card
 							card={newCard}
 							key={newCard._id}
