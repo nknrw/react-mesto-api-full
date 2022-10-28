@@ -1,4 +1,3 @@
-// const baseUrl = 'https://api.mesto.nknrw.nomoredomains.icu';
 const { NODE_ENV } = process.env;
 
 const baseUrl = NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://api.mesto.nknrw.nomoredomains.icu';
