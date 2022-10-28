@@ -46,7 +46,8 @@ export default function App() {
 					console.log(err);
 				});
 		}
-	}, [loggedIn]);
+	}, [loggedIn, tokenCheck]);
+
 
 	function handleCardLike(card) {
 		const isLiked = card.likes.some((like) => like._id === currentUser._id);
@@ -117,7 +118,7 @@ export default function App() {
 		);
 	}
 
-	function closeAllPopups(e) {
+	function closeAllPopups() {
 		setEditAvatarPopupOpen(false);
 		setEditProfilePopupOpen(false);
 		setAddPlacePopupOpen(false);
@@ -132,7 +133,7 @@ export default function App() {
 				setIsInfoTooltipOpen(true);
 				setInfoTooltipStatus(true);
 				history.push('/sign-in');
-				console.log(res);				
+				console.log(res);
 			})
 			.catch((err) => {
 				setInfoTooltipStatus(false);
@@ -162,7 +163,7 @@ export default function App() {
 			auth.getContent(jwt)
 				.then((res) => {
 					setLoggedIn(true);
-					setUserEmail(res.data.email);
+					setUserEmail(res.email);
 					history.push('/');
 				})
 				.catch((err) => {
