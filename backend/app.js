@@ -9,9 +9,15 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const auth = require('./middlewares/auth');
 const { createUser, login } = require('./controllers/users');
 const NotFoundError = require('./errors/not-found-err');
-const ServerError = require('./errors/server-err');
+// const ServerError = require('./errors/server-err');
 
 const { PORT = 3000 } = process.env;
+
+mongoose.connect('mongodb://localhost:27017/mestodb', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+  .catch(console.dir);
 
 const app = express();
 
@@ -37,7 +43,6 @@ app.use(cors(corsOptionsDelegate));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(express.json());
 
 app.use(requestLogger);
 
@@ -78,16 +83,18 @@ app.use((err, req, res, next) => {
   next();
 });
 
-async function start(req, res, next) {
-  try {
-    await mongoose.connect('mongodb://localhost:27017/mestodb', {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    await app.listen(PORT);
-  } catch (err) {
-    next(new ServerError('Ошибка сервера'));
-  }
-}
+app.listen(PORT);
 
-start();
+// async function start(req, res, next) {
+//   try {
+//     await mongoose.connect('mongodb://localhost:27017/mestodb', {
+//       useNewUrlParser: true,
+//       useUnifiedTopology: true,
+//     });
+//     await app.listen(PORT);
+//   } catch (err) {
+//     next(new ServerError('Ошибка сервера'));
+//   }
+// }
+
+// start();
