@@ -163,7 +163,7 @@ export default function App() {
 			auth.getContent(jwt)
 				.then((res) => {
 					setLoggedIn(true);
-					setUserEmail(res.email);
+					setUserEmail(res.data.email);
 					history.push('/');
 				})
 				.catch((err) => {
