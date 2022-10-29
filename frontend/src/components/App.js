@@ -47,10 +47,11 @@ export default function App() {
 					console.log(err);
 				});
 		}
+		tokenCheck();
 	}, [history]);
 
 	useEffect(() => {
-		tokenCheck();
+		// tokenCheck();
 		if (loggedIn) {
 			Promise.all([api.getUserInfo(), api.getInitialCards()])
 				.then(([userData, { cards }]) => {
@@ -61,7 +62,7 @@ export default function App() {
 					console.log(err);
 				});
 		}
-	}, [loggedIn, tokenCheck]);
+	}, [loggedIn]);
 
 	function handleCardLike(card) {
 		const isLiked = card.likes.some((like) => like._id === currentUser._id);
