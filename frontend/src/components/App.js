@@ -16,7 +16,7 @@ import Register from "./Register";
 import Login from "./Login";
 import ProtectedRoute from "./ProtectedRoute";
 
-import * as auth from "../utils/auth";
+import * as auth from "../utils/Auth";
 
 export default function App() {
 	const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
