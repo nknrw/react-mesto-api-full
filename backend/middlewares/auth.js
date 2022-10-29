@@ -1,11 +1,9 @@
-// eslint-disable-next-line import/no-unresolved
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const AuthorizationError = require('../errors/authorization-err');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 
-// eslint-disable-next-line consistent-return
 const auth = (req, res, next) => {
   if (req.cookies.jwt) {
     const token = req.cookies.jwt;

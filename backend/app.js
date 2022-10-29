@@ -16,6 +16,7 @@ const { PORT = 3000 } = process.env;
 mongoose.connect('mongodb://localhost:27017/mestodb', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  family: 4,
 });
 
 const app = express();
@@ -29,17 +30,22 @@ const allowedCors = [
   'https://localhost:4000',
 ];
 
-const corsOptionsDelegate = (req, callback) => {
-  let corsOptions;
-  if (allowedCors.indexOf(req.header('Origin')) !== -1) {
-    corsOptions = { origin: true, credentials: true };
-  } else {
-    corsOptions = { origin: false, credentials: true };
-  }
-  callback(null, corsOptions);
-};
+app.use(cors({
+  origin: allowedCors,
+  credentials: true,
+}));
 
-app.use(cors(corsOptionsDelegate));
+// const corsOptionsDelegate = (req, callback) => {
+//   let corsOptions;
+//   if (allowedCors.indexOf(req.header('Origin')) !== -1) {
+//     corsOptions = { origin: true, credentials: true };
+//   } else {
+//     corsOptions = { origin: false, credentials: true };
+//   }
+//   callback(null, corsOptions);
+// };
+//
+// app.use(cors(corsOptionsDelegate));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -86,16 +92,18 @@ app.use((err, req, res, next) => {
 
 app.listen(PORT);
 
-// async function start(req, res, next) {
+// async function connect(req, res, next) {
 //   try {
 //     await mongoose.connect('mongodb://localhost:27017/mestodb', {
 //       useNewUrlParser: true,
+//       useCreateIndex: true,
+//       useFindAndModify: false,
 //       useUnifiedTopology: true,
 //     });
 //     await app.listen(PORT);
 //   } catch (err) {
-//     next(new ServerError('Ошибка сервера'));
+//     return next(new ServerError('Ошибка подключения к базе данных'));
 //   }
-// }
+// };
 
-// start();
+// connect();

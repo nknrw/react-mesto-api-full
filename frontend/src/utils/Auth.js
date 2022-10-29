@@ -14,6 +14,7 @@ export function register(email, password) {
     return fetch(`${baseUrl}/signup`, {
         method: 'POST',
         headers: {
+            Accept: 'application/json',
             'Content-Type': 'application/json'
         },
         credentials: 'include',
@@ -26,6 +27,7 @@ export function authorize(email, password) {
     return fetch(`${baseUrl}/signin`, {
         method: 'POST',
         headers: {
+            Accept: 'application/json',
             'Content-Type': 'application/json'
         },
         credentials: 'include',
@@ -34,11 +36,13 @@ export function authorize(email, password) {
         .then(checkResponse);
 }
 
-export function getContent() {
+export function getContent(token) {
     return fetch(`${baseUrl}/users/me`, {
         method: 'GET',
         headers: {
+            Accept: 'application/json',
             'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`
         },
         credentials: 'include',
     })
