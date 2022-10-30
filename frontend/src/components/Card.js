@@ -17,8 +17,6 @@ export default function Card(props) {
 		props.onCardClick(props.card);
 	}
 	function handleLike() {
-		console.log(props.card.likes);
-		console.log(isLiked);
 		props.onCardLike(props.card);
 	}
 
