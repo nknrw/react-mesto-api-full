@@ -12,7 +12,6 @@ const cardSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator:
-        // eslint-disable-next-line no-useless-escape
         (v) => /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/.test(v),
       message: 'Неверный формат ссылки',
     },

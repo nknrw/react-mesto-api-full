@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const { celebrate, Joi, errors } = require('celebrate');
-const cors = require('cors');
+const { cors } = require('./middlewares/cors');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const auth = require('./middlewares/auth');
 const { createUser, login } = require('./controllers/users');
@@ -21,19 +21,21 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
 
 const app = express();
 
-const allowedCors = [
-  'http://mesto.nknrw.nomoredomains.icu',
-  'https://mesto.nknrw.nomoredomains.icu',
-  'http://localhost:3000',
-  'https://localhost:3000',
-  'http://localhost:4000',
-  'https://localhost:4000',
-];
+app.use(cors);
 
-app.use(cors({
-  origin: allowedCors,
-  credentials: true,
-}));
+// const allowedCors = [
+//   'http://mesto.nknrw.nomoredomains.icu',
+//   'https://mesto.nknrw.nomoredomains.icu',
+//   'http://localhost:3000',
+//   'https://localhost:3000',
+//   'http://localhost:4000',
+//   'https://localhost:4000',
+// ];
+//
+// app.use(cors({
+//   origin: allowedCors,
+//   credentials: true,
+// }));
 
 // const corsOptionsDelegate = (req, callback) => {
 //   let corsOptions;

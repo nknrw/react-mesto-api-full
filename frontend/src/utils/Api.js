@@ -49,7 +49,7 @@ class Api {
 			method: 'POST',
 			headers: this._headers,
 			credentials: 'include',
-			body: JSON.stringify({ name, link }),
+			body: JSON.stringify({ name: name, link: link }),
 		}).then((res) => this._getResponseData(res));
 	}
 
@@ -63,20 +63,28 @@ class Api {
 	}
 	
 	// Постановка/снятие лайка
+	// changeLikeCardStatus(cardId, isLiked) {
+	// 	if (isLiked) {
+	// 		return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+	// 			method: "DELETE",
+	// 			headers: this._headers,
+	// 			credentials: 'include',
+	// 		}).then(this._getResponseData);
+	// 	} else {
+	// 		return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+	// 			method: "PUT",
+	// 			headers: this._headers,
+	// 			credentials: 'include',
+	// 		}).then(this._getResponseData);
+	// 	}
+	// }
+
 	changeLikeCardStatus(cardId, isLiked) {
-		if (isLiked) {
-			return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
-				method: "DELETE",
-				headers: this._headers,
-				credentials: 'include',
-			}).then(this._getResponseData);
-		} else {
-			return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
-				method: "PUT",
-				headers: this._headers,
-				credentials: 'include',
-			}).then(this._getResponseData);
-		}
+		return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+			method: isLiked ? 'DELETE' : 'PUT',
+			headers: this._headers,
+			credentials: 'include',
+		}).then((res) => this._getResponseData(res));
 	}
 
 	// Изменение аватара

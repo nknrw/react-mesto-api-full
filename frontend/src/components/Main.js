@@ -23,7 +23,7 @@ export default function Main(props) {
 					<h2 className="profile__about">{currentUser.about}</h2>
 				</div>
 				<button type="button" className="profile__edit-button" onClick={props.onEditProfile}></button>
-				<button type="button" className="profile__add-button" onClick={props.onAddPlace}></button>
+				<button type="button" className="profile__add-button" onClick={props.onAddPlacePopup}></button>
 			</section>
 			{/* <!-- Карточки --> */}
 			<section className="elements">
@@ -31,10 +31,10 @@ export default function Main(props) {
 						<Card
 							card={newCard}
 							key={newCard._id}
-							name={newCard.name}
-							link={newCard.link}
+							// name={newCard.name}
+							// link={newCard.link}
 							onCardClick={props.onCardClick}
-							likes={newCard.likes.length}
+							// likes={newCard.likes.length}
 							onCardLike={props.onCardLike}
 							onCardDelete={props.onCardDelete} />
 					)

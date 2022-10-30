@@ -34,46 +34,71 @@ export default function App() {
 	const [userEmail, setUserEmail] = useState('');
 	const history = useHistory();
 
-	const tokenCheck = React.useCallback(() => {
-		const jwt = localStorage.getItem('jwt');
-		if (jwt) {
-			auth.getContent(jwt)
-				.then((res) => {
-					setLoggedIn(true);
-					setUserEmail(res.email);
-					history.push('/');
-				})
-				.catch((err) => {
-					console.log(err);
-				});
-		}
-		tokenCheck();
+	// const tokenCheck = React.useCallback(() => {
+	// 	const jwt = localStorage.getItem('jwt');
+	// 	if (jwt) {
+	// 		auth.getContent(jwt)
+	// 			.then((res) => {
+	// 				setLoggedIn(true);
+	// 				setUserEmail(res.email);
+	// 				history.push('/');
+	// 			})
+	// 			.catch((err) => {
+	// 				console.log(err);
+	// 			});
+	// 	}
+	// 	tokenCheck();
+	// }, [history]);
+	//
+	// useEffect(() => {
+	// 	// tokenCheck();
+	// 	if (loggedIn) {
+	// 		Promise.all([api.getUserInfo(), api.getInitialCards()])
+	// 			.then(([userData, { cards }]) => {
+	// 				setCurrentUser(userData);
+	// 				setCards(cards);
+	// 			})
+	// 			.catch((err) => {
+	// 				console.log(err);
+	// 			});
+	// 	}
+	// }, [loggedIn]);
+
+	useEffect(() => {
+		auth.getContent( )
+			.then((res) => {
+				setLoggedIn(true);
+				setUserEmail(res.email);
+				history.push('/');
+			})
+			.catch((err) => {
+				history.push('/sign-in');
+				console.log(err);
+			});
 	}, [history]);
 
 	useEffect(() => {
-		// tokenCheck();
-		if (loggedIn) {
-			Promise.all([api.getUserInfo(), api.getInitialCards()])
-				.then(([userData, { cards }]) => {
-					setCurrentUser(userData);
-					setCards(cards);
-				})
-				.catch((err) => {
-					console.log(err);
-				});
-		}
-	}, [loggedIn]);
+		Promise.all([api.getUserInfo(), api.getInitialCards()])
+			.then(([users, { cards }]) => {
+				setCurrentUser(users);
+				setCards(cards);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}, [loggedIn, history]);
 
 	function handleCardLike(card) {
-		const isLiked = card.likes.some((like) => like._id === currentUser._id);
-		api.changeLikeCardStatus(card._id, isLiked)
+		const isLiked = card.likes.some((i) => i === currentUser._id);
+		api.changeLikeCardStatus(card._id, !isLiked)
 			.then((newCard) => {
-				setCards((state) => state.map((c) => (c._id === card._id ? newCard : c)));
+				setCards((state) => state.map(((c) => c._id === card._id ? newCard : c)));
 		})
 			.catch((err) => {
 				console.log(err);
 			});
 	}
+
 	function handleCardDelete(card) {
 		api.deleteCard(card._id).then(() => {
 			setCards((state) => state.filter((c) => (c._id !== card._id)));
@@ -102,7 +127,7 @@ export default function App() {
 
 	function handleUpdateUser(data) {
 		api.setUserInfo(data)
-			.then(res => {
+			.then((res) => {
 				setCurrentUser(res);
 				closeAllPopups();
 			}).catch(err => {
@@ -113,7 +138,7 @@ export default function App() {
 
 	function handleUpdateAvatar(data) {
 		api.setUserAvatar(data)
-			.then(res => {
+			.then((res) => {
 				setCurrentUser(res);
 				closeAllPopups();
 			}).catch(err => {
@@ -129,8 +154,7 @@ export default function App() {
 				closeAllPopups();
 			}).catch(err => {
 				console.log(err);
-			}
-		);
+			});
 	}
 
 	function closeAllPopups() {
@@ -192,7 +216,7 @@ export default function App() {
 						component={Main}
 						onEditProfile={handleEditProfilePopupClick}
 						onEditAvatar={handleEditAvatarPopupClick}
-						onAddPlace={handleAddPlacePopupClick}
+						onAddPlacePopup={handleAddPlacePopupClick}
 						onCardClick={handleCardClick}
 						cards={cards}
 						onCardLike={handleCardLike}

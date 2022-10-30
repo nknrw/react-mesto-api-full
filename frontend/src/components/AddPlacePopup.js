@@ -7,11 +7,11 @@ export default function AddPlacePopup(props) {
 
     function handleCardName(e) {
         setCardName(e.target.value);
-    };
+    }
 
     function handleCardLink(e) {
         setCardLink(e.target.value);
-    };
+    }
 
     React.useEffect(() => {
         setCardName("");
@@ -24,7 +24,7 @@ export default function AddPlacePopup(props) {
             name: cardName,
             link: cardLink
         });
-    };
+    }
 
     return (
         <PopupWithForm
