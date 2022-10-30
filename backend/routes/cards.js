@@ -16,16 +16,19 @@ cardRouter.post('/', celebrate({
     link: Joi.string().required().regex(/^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/),
   }),
 }), createCard);
+
 cardRouter.delete('/:cardId', celebrate({
   params: Joi.object().keys({
     cardId: Joi.string().regex(/^[0-9a-f]{24}$/i),
   }),
 }), deleteCard);
+
 cardRouter.put('/:cardId/likes', celebrate({
   params: Joi.object().keys({
     cardId: Joi.string().regex(/^[0-9a-f]{24}$/i),
   }),
 }), likeCard);
+
 cardRouter.delete('/:cardId/likes', celebrate({
   params: Joi.object().keys({
     cardId: Joi.string().regex(/^[0-9a-f]{24}$/i),

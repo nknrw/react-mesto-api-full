@@ -62,23 +62,7 @@ class Api {
 		}).then((res) => this._getResponseData(res));
 	}
 	
-	// Постановка/снятие лайка
-	// changeLikeCardStatus(cardId, isLiked) {
-	// 	if (isLiked) {
-	// 		return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
-	// 			method: "DELETE",
-	// 			headers: this._headers,
-	// 			credentials: 'include',
-	// 		}).then(this._getResponseData);
-	// 	} else {
-	// 		return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
-	// 			method: "PUT",
-	// 			headers: this._headers,
-	// 			credentials: 'include',
-	// 		}).then(this._getResponseData);
-	// 	}
-	// }
-
+	// Постановка и снятие лайка
 	changeLikeCardStatus(cardId, isLiked) {
 		return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
 			method: isLiked ? 'DELETE' : 'PUT',

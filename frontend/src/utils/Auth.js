@@ -36,13 +36,12 @@ export function authorize(email, password) {
         .then(checkResponse);
 }
 
-export function getContent(token) {
+export function getContent() {
     return fetch(`${baseUrl}/users/me`, {
         method: 'GET',
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`
         },
         credentials: 'include',
     })

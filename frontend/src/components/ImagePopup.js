@@ -20,10 +20,10 @@ export default function ImagePopup({ card, onClose, isOpen }) {
 	return (
 		<div
 			className={className}
-			onClick={onClose}>
+			onMouseDown={onClose}>
 			<div
 				className="popup__image-container"
-				onClick={(event) => {
+				onMouseDown={(event) => {
 				event.stopPropagation();
 				}}>
 				<figure className="popup__figure">

@@ -16,44 +16,24 @@ const { PORT = 3000 } = process.env;
 mongoose.connect('mongodb://localhost:27017/mestodb', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  family: 4,
+  // family: 4, // Use IPv4, skip trying IPv6
 });
 
 const app = express();
 
 app.use(cors);
 
-// const allowedCors = [
-//   'http://mesto.nknrw.nomoredomains.icu',
-//   'https://mesto.nknrw.nomoredomains.icu',
-//   'http://localhost:3000',
-//   'https://localhost:3000',
-//   'http://localhost:4000',
-//   'https://localhost:4000',
-// ];
-//
-// app.use(cors({
-//   origin: allowedCors,
-//   credentials: true,
-// }));
-
-// const corsOptionsDelegate = (req, callback) => {
-//   let corsOptions;
-//   if (allowedCors.indexOf(req.header('Origin')) !== -1) {
-//     corsOptions = { origin: true, credentials: true };
-//   } else {
-//     corsOptions = { origin: false, credentials: true };
-//   }
-//   callback(null, corsOptions);
-// };
-//
-// app.use(cors(corsOptionsDelegate));
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use(requestLogger);
+
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
 
 app.post('/signin', celebrate({
   body: Joi.object().keys({
@@ -93,19 +73,3 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(PORT);
-
-// async function connect(req, res, next) {
-//   try {
-//     await mongoose.connect('mongodb://localhost:27017/mestodb', {
-//       useNewUrlParser: true,
-//       useCreateIndex: true,
-//       useFindAndModify: false,
-//       useUnifiedTopology: true,
-//     });
-//     await app.listen(PORT);
-//   } catch (err) {
-//     return next(new ServerError('Ошибка подключения к базе данных'));
-//   }
-// };
-
-// connect();

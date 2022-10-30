@@ -34,63 +34,39 @@ export default function App() {
 	const [userEmail, setUserEmail] = useState('');
 	const history = useHistory();
 
-	// const tokenCheck = React.useCallback(() => {
-	// 	const jwt = localStorage.getItem('jwt');
-	// 	if (jwt) {
-	// 		auth.getContent(jwt)
-	// 			.then((res) => {
-	// 				setLoggedIn(true);
-	// 				setUserEmail(res.email);
-	// 				history.push('/');
-	// 			})
-	// 			.catch((err) => {
-	// 				console.log(err);
-	// 			});
-	// 	}
-	// 	tokenCheck();
-	// }, [history]);
-	//
-	// useEffect(() => {
-	// 	// tokenCheck();
-	// 	if (loggedIn) {
-	// 		Promise.all([api.getUserInfo(), api.getInitialCards()])
-	// 			.then(([userData, { cards }]) => {
-	// 				setCurrentUser(userData);
-	// 				setCards(cards);
-	// 			})
-	// 			.catch((err) => {
-	// 				console.log(err);
-	// 			});
-	// 	}
-	// }, [loggedIn]);
-
-	useEffect(() => {
-		auth.getContent( )
-			.then((res) => {
-				setLoggedIn(true);
-				setUserEmail(res.email);
-				history.push('/');
-			})
-			.catch((err) => {
-				history.push('/sign-in');
-				console.log(err);
-			});
+	const tokenCheck = React.useCallback(() => {
+		const jwt = localStorage.getItem('jwt');
+		if (jwt) {
+			auth.getContent(jwt)
+				.then((res) => {
+					setLoggedIn(true);
+					setUserEmail(res.email);
+					history.push('/');
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		}
+		// tokenCheck();
 	}, [history]);
 
 	useEffect(() => {
-		Promise.all([api.getUserInfo(), api.getInitialCards()])
-			.then(([users, { cards }]) => {
-				setCurrentUser(users);
-				setCards(cards);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	}, [loggedIn, history]);
+		tokenCheck();
+		if (loggedIn) {
+			Promise.all([api.getUserInfo(), api.getInitialCards()])
+				.then(([userData, { cards }]) => {
+					setCurrentUser(userData);
+					setCards(cards.reverse());
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		}
+	}, [loggedIn, tokenCheck]);
 
 	function handleCardLike(card) {
 		const isLiked = card.likes.some((i) => i === currentUser._id);
-		api.changeLikeCardStatus(card._id, !isLiked)
+		api.changeLikeCardStatus(card._id, isLiked)
 			.then((newCard) => {
 				setCards((state) => state.map(((c) => c._id === card._id ? newCard : c)));
 		})

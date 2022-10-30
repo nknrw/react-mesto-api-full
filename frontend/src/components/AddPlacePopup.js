@@ -14,8 +14,8 @@ export default function AddPlacePopup(props) {
     }
 
     React.useEffect(() => {
-        setCardName("");
-        setCardLink("");
+        setCardName('');
+        setCardLink('');
     }, [props.isOpen]);
 
     function handleSubmit(e) {

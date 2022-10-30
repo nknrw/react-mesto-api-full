@@ -31,10 +31,7 @@ export default function Main(props) {
 						<Card
 							card={newCard}
 							key={newCard._id}
-							// name={newCard.name}
-							// link={newCard.link}
 							onCardClick={props.onCardClick}
-							// likes={newCard.likes.length}
 							onCardLike={props.onCardLike}
 							onCardDelete={props.onCardDelete} />
 					)

@@ -17,11 +17,11 @@ export default function PopupWithForm({ title, isOpen, onClose, children, name, 
 	}, [isOpen, onClose]);
 
 	return (
-		<div className={className} onClick={onClose}>
+		<div className={className} onMouseDown={onClose}>
 			<form onSubmit={onSubmit}
 				className="popup__form"
-				onClick={(e) => {
-					e.stopPropagation();
+				onMouseDown={(event) => {
+					event.stopPropagation();
 				}}>
 				<button
 					className="popup__close-button"

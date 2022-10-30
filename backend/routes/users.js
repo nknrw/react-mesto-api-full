@@ -1,5 +1,4 @@
 const userRouter = require('express').Router();
-// eslint-disable-next-line import/no-unresolved
 const { celebrate, Joi } = require('celebrate');
 
 const {

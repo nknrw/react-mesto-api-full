@@ -19,8 +19,12 @@ export default function InfoTooltip({ isOpen, onClose, onInfoTooltipStatus }) {
     }, [isOpen, onClose]);
 
     return (
-        <div className={className}>
-            <div className="popup__container">
+        <div className={className} onMouseDown={onClose}>
+            <div className="popup__container" onMouseDown={
+                (event) => {
+                    event.stopPropagation();
+                }
+            }>
                 <img className="popup__icon" src={onInfoTooltipStatus ? success : failure} alt="Информация" />
                 <p className="popup__text">{onInfoTooltipStatus ? 'Вы успешно зарегистрировались!' : 'Что-то пошло не так! Попробуйте ещё раз.'}</p>
                 <button className="popup__close-button" type="button" onClick={onClose} />
