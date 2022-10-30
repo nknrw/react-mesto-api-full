@@ -34,7 +34,7 @@ function Register(props) {
                         className="auth__input" 
                         type="email" 
                         name="email" 
-                        placeholder="Email"
+                        placeholder="Введите email"
                         defaultValue={email || ''}
                         onChange={handleChange}
                         required
@@ -43,7 +43,7 @@ function Register(props) {
                         className="auth__input" 
                         type="password" 
                         name="password" 
-                        placeholder="Пароль"
+                        placeholder="Введите пароль"
                         defaultValue={password || ''}
                         onChange={handleChange}
                         required
