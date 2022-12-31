@@ -19,7 +19,7 @@ ____
 - Лайк карточек
  
 ### Ссылки:
-- IP 51.250.22.75
+- IP 51.250.107.46
 - Frontend: https://mesto.nknrw.nomoredomains.icu
 - Backend: https://api.mesto.nknrw.nomoredomains.icu
 ____
